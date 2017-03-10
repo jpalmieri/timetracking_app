@@ -393,7 +393,7 @@
     },
 
     getTicketForms: function() {
-      if (!this.ticket() || !this.ticket().id()) return;
+      if (!this.ticket().form().id()) { return; }
 
       this.ajaxPaged('ticketForms').done(this.onGetTicketFormsDone.bind(this));
     },
