@@ -194,35 +194,37 @@
 
       var audits = response.audits;
 
-      var audits = _.filter(audits, function(audit) {
-        var isFollowUp = audit.via && audit.via.source && audit.via.source.rel === 'follow_up';
+      if (!this.setting('keep_time_follow_up')) {
+        var audits = _.filter(audits, function(audit) {
+          var isFollowUp = audit.via && audit.via.source && audit.via.source.rel === 'follow_up';
 
-        // if not a follow up, it's good.
-        if (!isFollowUp) { return true; }
+          // if not a follow up, it's good.
+          if (!isFollowUp) { return true; }
 
-        // if not created via web, don't trust it.
-        if (audit.via.channel !== 'web') { return false; }
+          // if not created via web, don't trust it.
+          if (audit.via.channel !== 'web') { return false; }
 
-        var author = _.find(response.users, function(user) {
-          return user.id === audit.author_id;
-        })
+          var author = _.find(response.users, function(user) {
+            return user.id === audit.author_id;
+          })
 
-        // we can trust if it comes from admin or agent.
-        return (author.role === 'admin' || author.role === 'agent');
-      });
+          // we can trust if it comes from admin or agent.
+          return (author.role === 'admin' || author.role === 'agent');
+        });
 
-      // do any of the audits set totalTime?
-      var hasTotalTimeSet = _.some(audits, function(audit) {
-            // find the totalTimeEvent
-            var totalTimeEvent = _.find(audit.events, function(event) {
-                  return event.field_name == totalTimeFieldId;
-                });
+        // do any of the audits set totalTime?
+        var hasTotalTimeSet = _.some(audits, function(audit) {
+              // find the totalTimeEvent
+              var totalTimeEvent = _.find(audit.events, function(event) {
+                    return event.field_name == totalTimeFieldId;
+                  });
 
-            return !!totalTimeEvent;
-          });
+              return !!totalTimeEvent;
+            });
 
-      if (!hasTotalTimeSet) {
-        this.ticketFieldTotalTime(0);
+        if (!hasTotalTimeSet) {
+          this.ticketFieldTotalTime(0);
+        }
       }
 
       // refresh the timelog display
