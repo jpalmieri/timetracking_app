@@ -100,7 +100,7 @@ parts:
   - translation:
       key: "txt.apps.time_tracking.app.parameters.keep_time_follow_up.helpText"
       title: "This is the explanation helptext of the keep total time checkbox for the admin who is installing the app"
-      value: "When a follow up ticket is created we can either reset the total ticket time to zero, or copy over the total ticket time from the previous ticket."
+      value: "When a follow up ticket is created, copy over the total time from the previous ticket rather than starting from zero."
   - translation:
       key: "txt.apps.time_tracking.statuses.new"
       title: "first letter of status new"
