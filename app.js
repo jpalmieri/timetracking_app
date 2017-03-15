@@ -110,9 +110,9 @@
       console.log('DEBUG: Which is greater than MAX_TIME (s) of: ' +
           this.MAX_TIME);
       console.log('DEBUG: performance object exists: ' +
-          (typeof performance == "object" ? 'yes' : 'no'));
+          (typeof performance === "object" ? 'yes' : 'no'));
       console.log('DEBUG: performance.now function exists: ' +
-          (typeof performance.now == "function" ? 'yes' : 'no'));
+          (typeof performance.now === "function" ? 'yes' : 'no'));
     },
 
     onTicketSave: function() {
@@ -232,7 +232,7 @@
         var timelogs = _.reduce(audits, function(memo, audit) {
 
           var statusEvent = _.find(audit.events, function(event) {
-            return event.field_name == 'status';
+            return event.field_name === 'status';
           }, this);
 
           var auditEvent = _.find(audit.events, function(event) {
@@ -326,7 +326,7 @@
         this.$('.modal').modal('hide');
 
       } catch (e) {
-        if (e.message == 'bad_time_format') {
+        if (e.message === 'bad_time_format') {
           services.notify(this.I18n.t('errors.bad_time_format'), 'error');
         } else {
           throw e;
